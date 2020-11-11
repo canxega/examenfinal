@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+{{ super() }}
+Bienvenido
+{% endblock %}
+
+{% block content %}
+{% if username %}
+<h1>Bienvenido, {{ Username | capitalize }}</h1>
+{% endif %}
+
+{% if user_ip %}
+<h3>Tu IP es {{ user_ip }}</h3>
+{% else %}
+<a href="{{ url_for('index') }}" class="btn btn-info">Ir a inicio</a>
+{% endif %}
+<br>
+<br>
+
+<div>
+  <a href="{{url_for('irNuevoUser')}}" class="btn btn-success">Crear Usuario Admin</a>
+</div> 
+<br>
+<div class="col-md-7">
+    <table class="table table-striped table-hover table-bordered table-sm bg-white">
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>fullname</td>
+          <td>email</td>
+          <td>password</td>
+          <td>Rol</td>
+          
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for users in users %}
+        <tr>
+          <td>{{users.0}}</td>
+          <td>{{users.1}}</td>
+          <td>{{users.2}}</td>
+          <td>{{users.3}}</td>
+          <td>{{users.4}}</td>
+          <td>
+            <a href="/edit/{{users.0}}" class="btn btn-secondary">edit</a>
+            <a href="/delete/{{users.0}}" class="btn btn-danger btn-delete">delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+
+
+
+{% endblock %}

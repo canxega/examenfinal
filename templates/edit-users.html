@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+{{ super() }}
+Bienvenido
+{% endblock %}
+
+{% block content %}
+{% if username %}
+<h1>Bienvenido, {{ Username | capitalize }}</h1>
+{% endif %}
+
+{% if user_ip %}
+<h3>Tu IP es {{ user_ip }}</h3>
+{% else %}
+<a href="{{ url_for('index') }}">Ir a inicio</a>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card card-body">
+        <form action="/update/{{users.0}}" method="POST">
+          <div class="form-group">
+            <input type="text" name="name" value="{{users.1}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="text" name="email" value="{{users.2}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="text" name="password" value="{{users.3}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+{% endblock %}

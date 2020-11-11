@@ -1,0 +1,70 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block head %}
+    {{ super() }}
+
+
+        <meta charset="UTF-8">
+        <title>Flask Web App</title>
+        <!-- BOOTSTRAP 4 CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <!-- CUSTOM CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+         
+
+ 
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+            
+
+
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+         
+
+ 
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+
+
+
+
+    <title>
+        {% block title %}Flask Platzi |{% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/banner.css')}}">
+{% endblock %}
+
+{% block body %}
+    {% block navbar %}
+        {% include 'navbar.html' %}
+
+
+
+    {% endblock %}
+
+
+{% block banner %}
+    {% include 'banner.html' %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+   
+
+    {% block content %}{% endblock %}
+    {% block scripts %}
+        {{ super() }}
+    {% endblock %}
+{% endblock %}

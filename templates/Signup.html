@@ -1,0 +1,103 @@
+
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+    
+{% block title %}
+    {{ super() }}
+    Bienvenido
+{% endblock %}
+
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
+{% endblock %}
+
+{% block content %}
+    {% if username %}
+        <h1>Bienvenido, {{ Username | capitalize }}</h1>
+    {% endif %}
+
+    {% if user_ip %}
+        <h3>Tu IP es {{ user_ip }}</h3>
+    {% else %}
+        <a href="{{ url_for('index') }}">Ir a inicio</a>
+    {% endif %}
+
+
+
+
+    <div class="container">
+
+
+        <div class="row">
+    
+    
+            <div class="col-md-6 col-md-offset-3">
+    
+    
+                <form action="/register" method="POST">
+    
+    
+                    <div class="form-group">
+    
+    
+                        <label>Name:</label>
+    
+    
+                        <input type="text" class="form-control" name="name">
+    
+    
+                    </div>
+    
+    
+                    <div class="form-group">
+    
+    
+                        <label>Email:</label>
+    
+    
+                        <input type="email" class="form-control" name="email">
+    
+    
+                    </div>
+    
+    
+                    <div class="form-group">
+    
+    
+                        <label>Password:</label>
+    
+    
+                        <input type="password" class="form-control" name="password">
+    
+    
+                    </div>
+    
+    
+                    <div class="form-group">
+    
+    
+                        <button class="btn btn-primary">Registrarse</button>
+    
+    
+                    </div>
+    
+    
+                </form>
+    
+    
+            </div>
+    
+    
+        </div>
+    
+    
+    </div>
+    
+    
+
+
+      
+{% endblock %}

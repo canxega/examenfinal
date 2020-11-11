@@ -1,0 +1,184 @@
+
+
+{% block head %}
+    
+
+
+<meta charset="UTF-8">
+<title>Flask Web App</title>
+<!-- BOOTSTRAP 4 CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<!-- CUSTOM CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+ 
+
+
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+
+
+<title>
+{% block title %}Venta de VideoJuegos |{% endblock %}
+</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+{% endblock %}
+
+{% block body %}
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+
+
+
+
+
+{% block cargar %}
+
+<form class="form-inline">
+
+	<div class="form-group">
+		<label for="files">Upload a CSV formatted file:</label>
+		<input type="file" id="files" class="form-control" accept=".csv" required />
+	</div>
+
+	<div class="form-group">
+		<button type="submit" id="submit-file" class="btn btn-primary">Upload File</button>
+	</div>
+	
+</form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> <script src="papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+
+<script>
+    //Tenemos nuestra funcion de cargarArchivo
+    //Este metodo fue encontrado en internet
+    function cargarArchivo(){
+      //Usamos $(nombre del input donde esta el archivo).parse
+      $('#file').parse({
+            config: {
+          //Agregamos las configuraciones y le decimos
+          //Quien es el delimitador y que hara luego de leer el archivo
+          //En este caso usamos delimitador "," y que haga el metodo GuardarCanciones
+               delimiter: ",",
+               complete: GuardarCanciones,
+            },
+        //Esto es lo que hara antes de leer el archivo
+            before: function(file, inputElem)
+            {
+                console.log("Parsing file...", file);
+            },
+        //Esto es lo que hara si encuentra un error
+            error: function(err, file)
+            {
+                console.log("ERROR:", err, file);
+            },
+        //Esto es lo que hara cuando termina de parsear el archivo
+            complete: function()
+            {
+          console.log("Done with all files");
+        }
+      });
+    }
+
+    //En este caso hacemos una funcion, ignoren el async, fueron pruebas mias
+    async function GuardarCanciones(results) {
+      //En este caso results es un objeto con nuestros datos parseados
+      //Y el atributo .data es el que tiene lo que necesitamos
+      console.log(results.data)
+      var data = results.data;
+      var val = true
+      //Data al final termina siendo un arreglo de arreglos
+      //data[i] = La fila del archivo csv
+      //data[i][n] = Donde n representa la columan en cuestion
+      //Leemos las filas de data
+      for (i = 0; i < data.length; i++) {
+        //Hacemos el proceso necesarioa para guardar un dato en la API
+          var nombre = data[i][0]
+          var genero = data[i][1]
+          var precio = data[i][2]
+          var imagen = data[i][3]
+          
+          
+          var objeto = {
+              'nombre': nombre,
+              'genero': genero,
+              'precio': precio,
+              'imagen': fecha,
+                   
+           }
+          console.log(objeto)
+          //Aplicamos nuestro metodo magico con sus 3 metodos, then, catch, then
+          fetch('http://localhost:8000/videojuegos', {
+          method: 'POST',
+          body: JSON.stringify(objeto),
+          headers:{
+              'Content-Type': 'application/json'
+          }
+          }).then(res => res.json())
+          .catch(error => {
+              console.error('Error:', error)
+              alert("Ocurrio un error al consumir la API, revise la consola")
+              val = false
+          })
+          .then(response =>{
+              console.log('Success:', response);
+          }) 
+          }
+          //En mi caso, como yo lo programe, es que si hay un error a la hora de guardar las canciones
+          //No me muestre nada, pero si las guarda, esto es meramente visual
+          if(val = true)
+          {
+            //Usamos el alert para mandar respuestas del navegador hacia el usuario
+            //Unicamente tenemos que mandar el texto
+              alert("Se agregaron los juegos  exitosamente")
+              // Llamamos el metodo para actualizar la tabla
+                    MostrarCanciones()
+          }
+  }
+
+      function MostrarCanciones(){
+        //Funciona como los metodos anteriormente descritos
+          var contenido = document.querySelector('#CuerpoCanciones') 
+          contenido.innerHTML = ""
+          fetch('http://localhost:8000/static/cartillas.html')
+          .then(response => response.json())
+          .catch(error => {
+          console.log(error)
+          })
+          .then(res => {
+            //Recorriendo nuestro res e incrementando el innerHTML de nuestro elemento
+            //Identificado como contenido
+          for (var i in res) {
+              console.log(res[i])
+              contenido.innerHTML += 
+              `<tr>
+              <th>${res[i].nombre}</th>
+              <th>${res[i].precio}</th>
+              <th>${res[i].genero}</th>
+              
+              <th><img src="${res[i].imagen}" class="img-fluid" height="100%" width="100%"> </th>
+              <th><iframe src="${res[i].spotify}" width="350" height="430" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></th>
+              </tr>`
+              //La imagen, el link de Spotify y el link de Youtube tienen un codigo especifico para agregarse
+              //En este caso solo necesitamos el atributo src de cada uno.
+
+                console.log(results)
+          }
+          })
+    }
+
+
+</script>
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+{% endblock %}
+
+{% endblock %}

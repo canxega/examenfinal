@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+{{ super() }}
+Bienvenido
+{% endblock %}
+
+{% block content %}
+{% if username %}
+<h1>Bienvenido, {{ Username | capitalize }}</h1>
+{% endif %}
+
+{% if user_ip %}
+<h3>Tu IP es {{ user_ip }}</h3>
+{% else %}
+<a href="{{ url_for('index') }}">Ir a inicio</a>
+{% endif %}
+
+
+
+<div class="container">
+  <h1>Reportes de usuarios</h1>
+  <table class="table" id="example">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">fullname</th>
+        <th scope="col">email</th>
+        <th scope="col">password</th>
+        <th scope="col">rol</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for users in users %}
+      <tr>
+        <th>{{users.0}}</th>
+        <th>{{users.1}}</th>
+        <th>{{users.2}}</th>
+        <th>{{users.3}}</th>
+        <th>{{users.4}}</th>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+  <p class="lead">
+    <button id="json" class="btn btn-primary">TO JSON</button>
+    <button id="csv" class="btn btn-info">TO CSV</button>
+    <button id="pdf" class="btn btn-danger">TO PDF</button>
+    <button id="txt" class="btn btn-success">TO TXT</button>
+</p>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js" defer></script>
+<script src="js/tableHTMLExport.js" defer></script>
+<script>
+$("#json").on("click", function () {
+    $("#example").tableHTMLExport({
+        type: "json",
+        filename: "sample.json",
+    });
+});
+$("#csv").on("click", function () {
+    $("#example").tableHTMLExport({ type: "csv", filename: "reporte.csv" });
+});
+$("#pdf").on("click", function () {
+    $("#example").tableHTMLExport({ type: "pdf", filename: "reporte.pdf" });
+});
+$("#txt").on("click", function () {
+    $("#example").tableHTMLExport({ type: "txt", filename: "reporte.txt" });
+});
+</script>
+
+
+
+
+
+
+  {% endblock %}

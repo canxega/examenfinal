@@ -1,0 +1,77 @@
+
+   <link rel="stylesheet" href="css/main.css">
+
+<nav class="navbar navbar-expand-md navbar navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+ 
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('static', filename='cartillas.html')  }}"> <img src="{{ url_for('static', filename='images/easyeat.png') }}"
+          style="max-width: 100px"
+          alt="Platzi logo"     > <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('static', filename='cartillas.html')  }}">Catalogo</a>
+      </li>
+
+      {% if session['name'] %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('static', filename='biblioteca.html')  }}">Biblioteca</a>
+      </li>
+
+      
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('perfil')  }}">Perfil</a>
+        
+      </li>
+      {% endif %}
+
+      {% if session['rol']=='admin' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('static', filename='cargaMasiva.html')  }}">Carga Masiva</a>
+
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('static', filename='Crud_user.html')  }}">CRUD De Usuarios</a>
+
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('static', filename='Reportes-juegos.html')  }}"> Reportes 
+          
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('static', filename='Reportes-usuarios.html')  }}"> Reportes Usuarios</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    {% if session['name'] %}
+      <li class="navbar-nav ">
+        <a class="nav-link" href="{{ url_for('logout') }}">Cerrar Sesion</a>
+        
+      </li>
+    {% else %}
+      <li class="navbar-nav">
+        <a class="nav-link " href="{{ url_for('irLogin') }}">Login</a>
+      </li>
+      
+      <li class="navbar-nav">
+        <a class="nav-link" href="{{ url_for('irNuevoUserN') }}">Crear Usuario</a>
+        
+      </li>
+      {% endif %}
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
