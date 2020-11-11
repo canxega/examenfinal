@@ -1,2 +1,2 @@
 # Proyecto2
-Laboratorio de IPC! Seccion E "python, Flask"
+examen final de desarrollo web echo en "python, Flask"
